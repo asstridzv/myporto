@@ -63,6 +63,7 @@ export type Database = {
           created_at: string | null
           format_key: string | null
           id: string
+          is_public: boolean
           platforms: string[] | null
           text: string | null
           title: string | null
@@ -73,6 +74,7 @@ export type Database = {
           created_at?: string | null
           format_key?: string | null
           id?: string
+          is_public?: boolean
           platforms?: string[] | null
           text?: string | null
           title?: string | null
@@ -83,6 +85,7 @@ export type Database = {
           created_at?: string | null
           format_key?: string | null
           id?: string
+          is_public?: boolean
           platforms?: string[] | null
           text?: string | null
           title?: string | null

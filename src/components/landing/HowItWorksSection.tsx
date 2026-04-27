@@ -3,23 +3,23 @@ import { useEffect, useRef, useState } from "react";
 const steps = [
   {
     number: "01",
-    title: "Write your content",
-    description: "Type your post in the unified editor. Character counts update in real time for every platform.",
+    title: "SDN 2 CAKRANEGARA",
+    description: "2012-2018",
   },
   {
     number: "02",
-    title: "Upload your visuals",
-    description: "Add images and see how they'll crop on each platform. Aspect ratio guides show you exactly what's visible.",
+    title: "SMPN 1 MATARAM",
+    description: "2018-2021",
   },
   {
     number: "03",
-    title: "Review every preview",
-    description: "All four platform previews update as you type. Spot issues before your audience does.",
+    title: "SMAN 5 MATARAM",
+    description: "2021-2023 (AKSELRATION)",
   },
   {
     number: "04",
-    title: "Publish with confidence",
-    description: "Export your optimized content or copy it directly to each platform. No more post-publish regrets.",
+    title: "UNIVERSITAS BUMIGORA",
+    description: "2023-sekarang",
   },
 ];
 
@@ -39,11 +39,11 @@ export function HowItWorksSection() {
   }, []);
 
   return (
-    <section id="how-it-works" className="py-24 md:py-32 bg-foreground">
+    <section id="how-it-works" className="py-24 md:py-32 bg-background">
       <div className="mx-auto max-w-6xl px-6" ref={ref}>
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="text-3xl font-semibold tracking-tight text-background md:text-4xl" style={{ letterSpacing: "-0.02em" }}>
-            From draft to pixel-perfect in minutes
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl" style={{ letterSpacing: "-0.02em" }}>
+            Education
           </h2>
         </div>
 
@@ -59,9 +59,9 @@ export function HowItWorksSection() {
                 transition: `all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${i * 100}ms`,
               }}
             >
-              <span className="text-4xl font-bold text-background/15">{step.number}</span>
-              <h3 className="mt-3 text-sm font-semibold text-background">{step.title}</h3>
-              <p className="mt-1.5 text-sm text-background/60 leading-relaxed">{step.description}</p>
+              <span className="text-4xl font-bold text-foreground/10">{step.number}</span>
+              <h3 className="mt-3 text-sm font-semibold text-foreground">{step.title}</h3>
+              <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>

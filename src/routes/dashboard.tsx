@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { Plus, Trash2, LogOut, FileText, Clock, Sparkles, Image as ImageIcon, PenLine, Eye, Video } from "lucide-react";
+import { Plus, Trash2, LogOut, FileText, Clock, Sparkles, Image as ImageIcon, PenLine, Eye, Video, Globe, Lock } from "lucide-react";
 import logoPinpost from "@/assets/logo-pinpost.png";
 import { Button } from "@/components/ui/button";
 import { FORMAT_PRESETS, type FormatKey } from "@/components/editor/formatPresets";
@@ -16,6 +16,7 @@ interface Draft {
   text: string;
   format_key: string;
   updated_at: string;
+  is_public: boolean;
 }
 
 interface DraftThumbnail {
@@ -257,6 +258,16 @@ function DashboardPage() {
     }
   }, []);
 
+  const togglePublish = useCallback(async (id: string, currentlyPublic: boolean) => {
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      await supabase.from("drafts").update({ is_public: !currentlyPublic }).eq("id", id);
+      setDrafts((prev) => prev.map((d) => d.id === id ? { ...d, is_public: !currentlyPublic } : d));
+    } catch (e) {
+      console.error("Failed to toggle publish", e);
+    }
+  }, []);
+
   if (loading || redirecting || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -408,6 +419,12 @@ function DashboardPage() {
                           {format.shortLabel}
                         </span>
                       )}
+                      {draft.is_public && (
+                        <span className="absolute top-2 right-2 flex items-center gap-1 text-[10px] font-medium text-primary-foreground bg-primary/90 backdrop-blur-sm px-2 py-0.5 rounded-md">
+                          <Globe className="h-2.5 w-2.5" />
+                          Published
+                        </span>
+                      )}
                     </div>
 
                     {/* Content */}
@@ -429,12 +446,25 @@ function DashboardPage() {
                             year: "numeric",
                           })}
                         </span>
-                        <button
-                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteDraft(draft.id); }}
-                          className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:bg-destructive/10 hover:text-destructive active:scale-95"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </button>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); togglePublish(draft.id, draft.is_public); }}
+                            title={draft.is_public ? "Published — click to unpublish" : "Private — click to publish"}
+                            className={`flex h-6 w-6 items-center justify-center rounded-md transition-all active:scale-95 ${
+                              draft.is_public
+                                ? "text-primary bg-primary/10 hover:bg-primary/20"
+                                : "text-muted-foreground bg-accent hover:bg-accent/80"
+                            }`}
+                          >
+                            {draft.is_public ? <Globe className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
+                          </button>
+                          <button
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteDraft(draft.id); }}
+                            className="flex h-6 w-6 items-center justify-center rounded-md bg-destructive/10 text-destructive hover:bg-destructive hover:text-white transition-all active:scale-95"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </Link>

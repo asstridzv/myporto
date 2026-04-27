@@ -1,150 +1,132 @@
+import { useEffect, useState } from "react";
 import {
-  Instagram,
-  Linkedin,
-  Twitter,
-  Facebook,
-  Heart,
-  MessageCircle,
-  Share2,
-  Bookmark,
-  ThumbsUp,
-  Send,
-  Repeat,
+  Instagram, Linkedin, Twitter, Facebook, Heart, MessageCircle,
+  Send, Bookmark, MoreHorizontal, Share2, ThumbsUp, MessageSquare,
+  Repeat, Globe
 } from "lucide-react";
-import landingAvatar from "@/assets/landing-avatar.jpg";
-import previewInstagram from "@/assets/preview-instagram.jpg";
-import previewLinkedin from "@/assets/preview-linkedin.jpg";
-import previewX from "@/assets/preview-x.jpg";
-import previewFacebook from "@/assets/preview-facebook.jpg";
 
-type Platform = "instagram" | "linkedin" | "x" | "facebook";
+interface PreviewCardProps {
+  platform: "instagram" | "linkedin" | "x" | "facebook";
+}
 
-const platformImages: Record<Platform, string> = {
-  instagram: previewInstagram,
-  linkedin: previewLinkedin,
-  x: previewX,
-  facebook: previewFacebook,
-};
+export function PreviewCard({ platform }: PreviewCardProps) {
+  const [data, setData] = useState({
+    display_name: "",
+    handle: "",
+    content_text: "",
+    image_url: ""
+  });
+  const [loading, setLoading] = useState(true);
 
-const platformMeta = {
-  instagram: { icon: Instagram, name: "Instagram", color: "text-pink-500" },
-  linkedin: { icon: Linkedin, name: "LinkedIn", color: "text-blue-700" },
-  x: { icon: Twitter, name: "X", color: "text-foreground" },
-  facebook: { icon: Facebook, name: "Facebook", color: "text-blue-600" },
-};
+  useEffect(() => {
+    (async () => {
+      try {
+        const { supabase } = await import("@/integrations/supabase/client");
+        const { data: featureData } = await supabase
+          .from("feature_previews")
+          .select("*")
+          .eq("platform", platform)
+          .single();
 
-const platformContent = {
-  instagram: {
-    displayName: "Sarah Chen",
-    handle: "sarahcreates",
-    text: "Just launched something incredible 🚀 Check out PinPost — preview your posts across every platform before you publish. No more guessing!",
-    dims: "1080×1080",
-  },
-  linkedin: {
-    displayName: "Sarah Chen",
-    handle: "Content Strategist · 2h",
-    text: "Excited to announce PinPost — the precision preview tool for modern marketing teams. See exactly how your content renders across Instagram, X, LinkedIn, and Facebook.",
-    dims: "1200×1200",
-  },
-  x: {
-    displayName: "Sarah Chen",
-    handle: "@sarahcreates · 3h",
-    text: "Your post looks different on every platform.\n\nPinPost fixes that.\n\nPreview across Instagram, LinkedIn, X, and Facebook — in real time. ✨",
-    dims: "1080×1080",
-  },
-  facebook: {
-    displayName: "Sarah Chen",
-    handle: "Just now · 🌐",
-    text: "Stop guessing how your posts will look. PinPost gives you pixel-perfect previews across every major platform. Try it free today 🎯",
-    dims: "1080×1080",
-  },
-};
+        if (featureData) {
+          setData({
+            display_name: featureData.display_name,
+            handle: featureData.handle,
+            content_text: featureData.content_text,
+            image_url: featureData.image_url
+          });
+        }
+      } catch (e) {
+        console.error("Failed to fetch feature data", e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [platform]);
 
-export function PreviewCard({ platform }: { platform: Platform }) {
-  const meta = platformMeta[platform];
-  const content = platformContent[platform];
-  const Icon = meta.icon;
+  const renderContent = () => {
+    const displayName = data.display_name || "Sarah Chen";
+    const handle = data.handle || (platform === "instagram" ? "sarahcreates" : platform === "linkedin" ? "Content Strategist · 2h" : platform === "x" ? "@sarahcreates · 3h" : "Just now · 🌐");
+    const text = data.content_text || "The future of social media management is here. Simple, fast, and unified.";
+    const image = data.image_url || "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=60";
 
-  return (
-    <div className="flex flex-col min-h-[280px]">
-      {/* Platform header */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-card">
-        <Icon className={`h-3.5 w-3.5 ${meta.color}`} />
-        <span className="text-xs font-medium text-foreground">{meta.name}</span>
-        <span className="ml-auto text-[10px] text-muted-foreground font-mono tabular-nums">
-          {content.dims}
-        </span>
-      </div>
+    const dims = platform === "linkedin" ? "1200×1200" : "1080×1080";
+    const Icon = platform === "instagram" ? Instagram : platform === "linkedin" ? Linkedin : platform === "x" ? Twitter : Facebook;
+    const iconColor = platform === "instagram" ? "text-pink-500" : platform === "linkedin" ? "text-blue-600" : platform === "x" ? "text-black" : "text-blue-600";
 
-      {/* Post content */}
-      <div className="p-4 flex-1 flex flex-col">
-        {/* User info */}
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0 overflow-hidden">
-            <img src={landingAvatar} alt="Sarah Chen" className="h-full w-full object-cover" />
+    return (
+      <div className="flex flex-col h-full bg-white border-r border-border/50 last:border-0 min-h-[550px]">
+        {/* Platform Header */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/50 bg-gray-50/50 shrink-0">
+          <div className="flex items-center gap-2">
+            <Icon className={`w-3.5 h-3.5 ${iconColor}`} />
+            <span className="text-[11px] font-semibold text-gray-700 capitalize">{platform}</span>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-foreground leading-none">
-              {content.displayName}
-            </p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {content.handle}
-            </p>
-          </div>
+          <span className="text-[9px] font-mono text-gray-400 tabular-nums">{dims}</span>
         </div>
 
-        {/* Post text */}
-        <p className="text-xs text-foreground leading-relaxed flex-1 whitespace-pre-line">
-          {platform === "instagram" && content.text.length > 125
-            ? content.text.slice(0, 125) + "… more"
-            : content.text}
-        </p>
+        {/* Post Content */}
+        <div className="p-4 flex flex-col h-full">
+          {/* User Profile */}
+          <div className="flex items-center gap-3 mb-3 shrink-0">
+            <div className="w-9 h-9 rounded-full bg-gray-100 overflow-hidden border border-border/50">
+              <img src={image} alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-[13px] font-bold text-gray-900 leading-tight truncate">{displayName}</p>
+              <p className="text-[11px] text-gray-500 leading-tight truncate">{handle}</p>
+            </div>
+          </div>
 
-        {/* Post image */}
-        <div className="mt-3 rounded-lg overflow-hidden border border-border">
-          <img
-            src={platformImages[platform]}
-            alt={`${meta.name} preview`}
-            className="w-full aspect-square object-cover"
-            loading="lazy"
-          />
-        </div>
+          {/* Text Content */}
+          <div className="flex-1 min-h-[80px]">
+            <p className="text-[12px] text-gray-800 leading-[1.5] line-clamp-6 mb-4">
+              {text}
+            </p>
+          </div>
 
-        {/* Platform-specific engagement bar */}
-        <div className="mt-3 pt-2.5 border-t border-border">
-          {platform === "instagram" && (
-            <div className="flex items-center gap-4">
-              <Heart className="h-3.5 w-3.5 text-muted-foreground" />
-              <MessageCircle className="h-3.5 w-3.5 text-muted-foreground" />
-              <Send className="h-3.5 w-3.5 text-muted-foreground" />
-              <Bookmark className="h-3.5 w-3.5 text-muted-foreground ml-auto" />
-            </div>
-          )}
-          {platform === "linkedin" && (
-            <div className="flex items-center gap-3 text-[10px] text-muted-foreground overflow-hidden">
-              <span className="flex items-center gap-1 shrink-0"><ThumbsUp className="h-3 w-3" /> Like</span>
-              <span className="flex items-center gap-1 shrink-0"><MessageCircle className="h-3 w-3" /> Comment</span>
-              <span className="flex items-center gap-1 shrink-0"><Repeat className="h-3 w-3" /> Repost</span>
-              <span className="flex items-center gap-1 shrink-0"><Send className="h-3 w-3" /> Send</span>
-            </div>
-          )}
-          {platform === "x" && (
-            <div className="flex items-center gap-5 text-[10px] text-muted-foreground">
-              <span className="flex items-center gap-1"><MessageCircle className="h-3 w-3" /> 89</span>
-              <span className="flex items-center gap-1"><Repeat className="h-3 w-3" /> 247</span>
-              <span className="flex items-center gap-1"><Heart className="h-3 w-3" /> 1.2K</span>
-              <span className="flex items-center gap-1"><Share2 className="h-3 w-3" /></span>
-            </div>
-          )}
-          {platform === "facebook" && (
-            <div className="flex items-center gap-5 text-[10px] text-muted-foreground">
-              <span className="flex items-center gap-1"><ThumbsUp className="h-3 w-3" /> Like</span>
-              <span className="flex items-center gap-1"><MessageCircle className="h-3 w-3" /> Comment</span>
-              <span className="flex items-center gap-1"><Share2 className="h-3 w-3" /> Share</span>
-            </div>
-          )}
+          {/* Post Image */}
+          <div className="aspect-square w-full rounded-xl overflow-hidden border border-border shadow-sm mb-4 shrink-0 bg-gray-50">
+            <img src={image} alt="" className="w-full h-full object-cover" />
+          </div>
+
+          {/* Engagement Bar */}
+          <div className="pt-3 border-t border-border/50 shrink-0">
+            {platform === "instagram" ? (
+              <div className="flex items-center gap-4 text-gray-400">
+                <Heart className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4" />
+                <Send className="w-4 h-4" />
+                <Bookmark className="w-4 h-4 ml-auto" />
+              </div>
+            ) : platform === "x" ? (
+              <div className="flex items-center justify-between text-gray-400 text-[10px] px-1">
+                <span className="flex items-center gap-1.5"><MessageCircle className="w-3.5 h-3.5" /> 89</span>
+                <span className="flex items-center gap-1.5"><Repeat className="w-3.5 h-3.5" /> 247</span>
+                <span className="flex items-center gap-1.5"><Heart className="w-3.5 h-3.5" /> 1.2K</span>
+                <Share2 className="w-3.5 h-3.5" />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between text-gray-400 text-[10px]">
+                <span className="flex items-center gap-1.5"><ThumbsUp className="w-3.5 h-3.5" /> Like</span>
+                <span className="flex items-center gap-1.5"><MessageCircle className="w-3.5 h-3.5" /> Comment</span>
+                {platform === "linkedin" ? (
+                  <span className="flex items-center gap-1.5"><Repeat className="w-3.5 h-3.5" /> Repost</span>
+                ) : (
+                  <span className="flex items-center gap-1.5"><Share2 className="w-3.5 h-3.5" /> Share</span>
+                )}
+                {platform === "linkedin" && <Send className="w-3.5 h-3.5" />}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    );
+  };
+
+  if (loading) return (
+    <div className="flex-1 h-[550px] bg-white animate-pulse border-r border-border/50 last:border-0" />
   );
+
+  return renderContent();
 }

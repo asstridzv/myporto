@@ -37,24 +37,17 @@ export function HeroSection() {
             className="text-4xl font-semibold tracking-tight text-foreground opacity-0 animate-fade-up md:text-6xl"
             style={{ lineHeight: 1.1, letterSpacing: "-0.03em", textWrap: "balance" }}
           >
-            See exactly how your post looks before the world does
+            “Turning ideas into impact welcome to my journey.”
           </h1>
 
           <p
             className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground opacity-0 animate-fade-up-delay"
             style={{ textWrap: "pretty" }}
           >
-            Preview your content across Instagram, LinkedIn, X, and Facebook — all in one editor. Completely free, no catches.
+            Preview my content across Instagram, LinkedIn, X, and Facebook.
           </p>
 
-          <div className="mt-10 flex items-center justify-center gap-4 opacity-0 animate-fade-up-delay">
-            <Button variant="hero" size="xl" asChild>
-              <Link to={ctaLink}>
-                {user ? "Open editor" : "Get started — it's free"}
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
+
         </div>
       </div>
 
