@@ -162,3 +162,9 @@ $$;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+-- Ganti baris terakhir menjadi email Anda:
+INSERT INTO public.user_roles (user_id, role)
+SELECT id, 'admin'::app_role
+FROM auth.users
+WHERE email = 'email_anda@acit.com'
+ON CONFLICT (user_id, role) DO NOTHING;

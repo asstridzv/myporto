@@ -282,9 +282,9 @@ function DashboardPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-border bg-white px-6">
+      <header className="sticky top-0 z-10 flex h-20 items-center justify-between border-b border-border bg-white px-6">
         <div className="flex items-center gap-2.5">
-          <img src={logoPinpost} alt="PinPost" className="h-7 w-auto" />
+          <img src={logoPinpost} alt="Astrid Ekaningsih" className="h-14 w-auto" />
         </div>
         <div className="flex items-center gap-3">
           <span className="text-xs text-muted-foreground hidden md:inline">{user.email}</span>

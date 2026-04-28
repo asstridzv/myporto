@@ -117,7 +117,7 @@ function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center gap-2 mb-8">
-          <Link to="/"><img src={logoPinpost} alt="PinPost" className="h-10 w-auto" /></Link>
+          <Link to="/"><img src={logoPinpost} alt="Astrid Ekaningsih" className="h-20 w-auto" /></Link>
           <p className="text-sm text-muted-foreground text-center">
             Sign in to preview your posts across every platform
           </p>

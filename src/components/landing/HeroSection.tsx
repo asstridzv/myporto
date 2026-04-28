@@ -32,7 +32,7 @@ export function HeroSection() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <img src={logoPinpost} alt="PinPost" className="mx-auto mb-8 h-12 md:h-16 w-auto" />
+          <img src={logoPinpost} alt="Astrid Ekaningsih" className="mx-auto mb-2 h-24 md:h-32 w-auto" />
           <h1
             className="text-4xl font-semibold tracking-tight text-foreground opacity-0 animate-fade-up md:text-6xl"
             style={{ lineHeight: 1.1, letterSpacing: "-0.03em", textWrap: "balance" }}

@@ -362,14 +362,14 @@ function AdminPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-border bg-white px-6">
+      <header className="sticky top-0 z-10 flex h-20 items-center justify-between border-b border-border bg-white px-6">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
             <Link to="/dashboard">
               <ArrowLeft className="h-4 w-4" />
             </Link>
           </Button>
-          <img src={logoPinpost} alt="PinPost" className="h-7 w-auto" />
+          <img src={logoPinpost} alt="Astrid Ekaningsih" className="h-14 w-auto" />
           <span className="flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
             <Shield className="h-3 w-3" />
             Admin

@@ -455,14 +455,14 @@ export function PostEditor() {
   return (
     <div className="flex h-screen flex-col bg-background">
       {/* Top bar */}
-      <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-white px-4">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b border-border bg-white px-4">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
             <Link to="/dashboard">
               <ArrowLeft className="h-4 w-4" />
             </Link>
           </Button>
-          <img src={logoPinpost} alt="PinPost" className="h-6 w-auto" />
+          <img src={logoPinpost} alt="Astrid Ekaningsih" className="h-12 w-auto" />
         </div>
 
         <div className="flex items-center gap-2">
@@ -473,7 +473,7 @@ export function PostEditor() {
           <Button variant="outline" size="sm" onClick={saveDraft} disabled={saving}>
             {saving ? "Saving…" : "Save draft"}
           </Button>
-          
+
           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={signOut}>
             <LogOut className="h-4 w-4" />
           </Button>
@@ -550,11 +550,10 @@ export function PostEditor() {
                 return (
                   <div
                     key={p}
-                    className={`flex items-center justify-between rounded-md border px-2.5 py-1.5 text-xs transition-colors ${
-                      over
+                    className={`flex items-center justify-between rounded-md border px-2.5 py-1.5 text-xs transition-colors ${over
                         ? "border-destructive/30 bg-destructive/5 text-destructive"
                         : "border-border text-muted-foreground"
-                    }`}
+                      }`}
                   >
                     <span className="capitalize font-medium">{p === "x" ? "X" : p}</span>
                     <span className="font-mono tabular-nums">{count}/{limit}</span>
@@ -587,11 +586,10 @@ export function PostEditor() {
                         <button
                           key={key}
                           onClick={() => { setSelectedFormat(key); setFormatOpen(false); }}
-                          className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-colors active:scale-[0.98] ${
-                            selectedFormat === key
+                          className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-colors active:scale-[0.98] ${selectedFormat === key
                               ? "bg-accent text-accent-foreground"
                               : "text-foreground hover:bg-accent/50"
-                          }`}
+                            }`}
                         >
                           <span className="font-medium">{preset.label}</span>
                           <span className="text-xs text-muted-foreground font-mono tabular-nums">{dims.width}×{dims.height}</span>
@@ -678,11 +676,10 @@ export function PostEditor() {
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
-              className={`flex w-full items-center justify-center gap-3 rounded-lg border border-dashed p-6 text-sm transition-colors active:scale-[0.98] ${
-                dragOver
+              className={`flex w-full items-center justify-center gap-3 rounded-lg border border-dashed p-6 text-sm transition-colors active:scale-[0.98] ${dragOver
                   ? "border-primary bg-primary/5 text-primary"
                   : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
-              }`}
+                }`}
             >
               <div className="flex items-center gap-2">
                 <ImagePlus className="h-4 w-4" />
@@ -698,11 +695,10 @@ export function PostEditor() {
           <div className="flex items-center gap-1 border-b border-border px-4 py-2 shrink-0">
             <button
               onClick={() => setActivePlatform("all")}
-              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors active:scale-[0.97] ${
-                activePlatform === "all"
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors active:scale-[0.97] ${activePlatform === "all"
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
-              }`}
+                }`}
             >
               All
             </button>
@@ -710,11 +706,10 @@ export function PostEditor() {
               <button
                 key={p}
                 onClick={() => setActivePlatform(p)}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors capitalize active:scale-[0.97] ${
-                  activePlatform === p
+                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors capitalize active:scale-[0.97] ${activePlatform === p
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                }`}
+                  }`}
               >
                 {p === "x" ? "X" : p}
               </button>
