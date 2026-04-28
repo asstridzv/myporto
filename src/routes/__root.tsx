@@ -20,6 +20,7 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/b9uXYmgdTyWTYhHfslbu4ZrHRZ73/social-images/social-1775640762687-pinpost.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "google-site-verification", content: "googlea769583200c6706d" },
+      { name: "keywords", content: "Astrid Ekaningsih, Astrid Ekaningsih Portfolio, Social Media Marketing, Content Preview Tool, Social Sight Pro, Digital Creator Portfolio" },
     ],
     links: [
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" },
