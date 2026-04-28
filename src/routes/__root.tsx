@@ -19,6 +19,7 @@ export const Route = createRootRoute({
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/b9uXYmgdTyWTYhHfslbu4ZrHRZ73/social-images/social-1775640762687-pinpost.webp" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/b9uXYmgdTyWTYhHfslbu4ZrHRZ73/social-images/social-1775640762687-pinpost.webp" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "google-site-verification", content: "googlea769583200c6706d" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
